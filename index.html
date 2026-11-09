@@ -73,9 +73,9 @@
 <div class="office-grid">
 <figure><img data-img="esc1" src="" alt="Reunião no Sindicato dos Produtores Rurais de Petrolina" loading="lazy" decoding="async"></figure>
 <figure><img data-img="esc2" src="" alt="Encontro institucional na recepção do escritório" loading="lazy" decoding="async"></figure>
-<figure><img data-img="esc3" src="" alt="Grupo com exemplar da CLT na recepção do escritório" loading="lazy" decoding="async"></figure>
+<figure></figure>
 <figure><img data-img="esc4" src="" alt="Entrega de exemplar da CLT no escritório" loading="lazy" decoding="async"></figure>
-<figure><img data-img="esc5" src="" alt="Reunião de trabalho na sala de atendimento do escritório" loading="lazy" decoding="async"></figure>
+<figure></figure>
 </div>
 <p class="office-caption">Registros de reuniões, encontros institucionais e da rotina do escritório.</p>
 <a class="section-contact" href="https://wa.me/5574991326055">Falar com o escritório <span class="ico ico-ext" aria-hidden="true"></span></a></section>
@@ -118,7 +118,6 @@
 <script src="img21.js"></script>
 <script src="img22.js"></script>
 <script src="img23.js"></script>
-<script src="video-data.js"></script>
 <script>
 document.querySelectorAll("img[data-img]").forEach(function(el){
   var data = window.__IMG && window.__IMG[el.getAttribute("data-img")];
@@ -128,22 +127,43 @@ document.querySelectorAll("img[data-img]").forEach(function(el){
   var v=document.querySelector(".hero-video"); if(!v) return;
   var btn=document.querySelector(".video-toggle");
   var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var conn=navigator.connection||{}; var save=!!conn.saveData;
-  if(reduce||save||!window.__VIDEO_4X5) return;
-  try{
-    var b64=window.__VIDEO_4X5;
-    var bin=atob(b64); var len=bin.length; var bytes=new Uint8Array(len);
-    for(var i=0;i<len;i++) bytes[i]=bin.charCodeAt(i);
-    var blob=new Blob([bytes],{type:"video/mp4"});
-    v.src=URL.createObjectURL(blob);
-    v.classList.add("ready");
+  var conn=navigator.connection||{};
+  if(conn.saveData) return;
+  var loaded=false;
+  function setBtn(){
     btn.hidden=false;
-    var p=v.play(); if(p&&p.catch)p.catch(function(){});
-    btn.addEventListener("click",function(){
-      if(v.paused){v.play();btn.textContent="Pausar animação";btn.setAttribute("aria-pressed","false");}
-      else{v.pause();btn.textContent="Reproduzir animação";btn.setAttribute("aria-pressed","true");}
-    });
-  }catch(e){}
+    if(v.paused){btn.textContent="Reproduzir animação";btn.setAttribute("aria-pressed","true");}
+    else{btn.textContent="Pausar animação";btn.setAttribute("aria-pressed","false");}
+  }
+  function start(){
+    var p=v.play();
+    if(p&&p.catch)p.catch(function(){ setBtn(); });
+  }
+  v.addEventListener("playing",function(){ v.classList.add("ready"); setBtn(); });
+  v.addEventListener("pause",setBtn);
+  function load(){
+    if(loaded) return; loaded=true;
+    var sc=document.createElement("script");
+    sc.src="video-data.js";
+    sc.onload=function(){
+      try{
+        if(!window.__VIDEO_4X5) { setBtn(); return; }
+        var bin=atob(window.__VIDEO_4X5); var len=bin.length; var bytes=new Uint8Array(len);
+        for(var i=0;i<len;i++) bytes[i]=bin.charCodeAt(i);
+        if(window.__IMG&&window.__IMG.poster) v.poster=window.__IMG.poster;
+        v.src=URL.createObjectURL(new Blob([bytes],{type:"video/mp4"}));
+        if(reduce){ setBtn(); return; }
+        start();
+      }catch(e){ setBtn(); }
+    };
+    document.body.appendChild(sc);
+  }
+  btn.addEventListener("click",function(){
+    if(!loaded){ load(); }
+    else if(v.paused){ start(); }
+    else { v.pause(); }
+  });
+  if(reduce){ setBtn(); } else { load(); }
 })();
 </script>
 <script>
