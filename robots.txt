@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://advschnorr.com.br/sitemap.xml
