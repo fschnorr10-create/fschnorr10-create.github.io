@@ -49,3 +49,19 @@ h1,h2{font-family:'Playfair Display',Georgia,'Times New Roman',serif!important;f
 .hero header h1{font-weight:700}
 .book-grid h3,.tool-grid h3,.social-presence h3{font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-weight:600}
 footer{display:block}
+
+/* Reformulacao institucional - previa novembro 2026 */
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.hero-media{position:relative;margin:0;grid-column:2;grid-row:1/3;aspect-ratio:4/5;overflow:hidden;border:1px solid #68592e;border-radius:2px;background:#0d0c0a}
+.hero-media img,.hero-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.hero-video{opacity:0;transition:opacity .4s}
+.hero-video.ready{opacity:1}
+.video-toggle{position:absolute;right:10px;bottom:10px;background:rgba(0,0,0,.7);color:#f0eee9;border:1px solid #68592e;border-radius:3px;font-family:inherit;font-size:11px;letter-spacing:.04em;padding:6px 10px;cursor:pointer}
+.video-toggle:focus-visible{outline:2px solid #C9A44A;outline-offset:2px}
+.ico{display:inline-block;width:12px;height:12px;background:currentColor;vertical-align:-1px}
+.ico-ext{-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M7 17 17 7M9 7h8v8'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M7 17 17 7M9 7h8v8'/%3E%3C/svg%3E") center/contain no-repeat}
+.ico-down{-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M12 5v14M5 12l7 7 7-7'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M12 5v14M5 12l7 7 7-7'/%3E%3C/svg%3E") center/contain no-repeat}
+.subhead{margin:34px 0 8px;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#C9A44A;font-weight:600}
+.footer-links{margin-top:10px;font-size:12px;color:#9a978f}
+.footer-links a{color:#C9A44A;text-decoration:none}
+@media (max-width:860px){.hero-media{grid-column:1;grid-row:auto;max-width:340px}}
